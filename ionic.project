@@ -1,0 +1,10 @@
+{
+  "name": "LifeOfTbc2",
+  "app_id": "c45b1445",
+  "proxies": [
+    {
+      "path": "/json.php",
+      "proxyUrl": "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php"
+    }
+  ]
+}

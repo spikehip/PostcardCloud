@@ -1,0 +1,38 @@
+<ion-view view-title="Life of #tbc.hu">
+  <ion-content style="background: #e8ebf1;" class="padding">
+    <ion-list>
+      <ion-item ng-repeat="item in items">
+        <div class="card">
+          <div class="item item-avatar">
+            <img ng-src="http://meztelen.hu/asset/thumbnail?filename={{item.filename}}" alt="{{item.filename}}">
+            <h2>{{item.user}}</h2>
+            <p>{{item.date}}</p>
+            <p data-id="liked-by-{{item.id}}"></p>
+          </div>
+          <div class="item item-image">
+            <img ng-src="http://meztelen.hu/uploads/assets/{{item.filename}}" alt="{{item.filename}}"/>
+          </div>
+          <div class="item tabs tabs-secondary tabs-icon-left">
+              <a class="tab-item" data-id="{{item.id}}" href="#" ng-click="like({{item}})">
+                <i class="icon ion-thumbsup"></i>
+                Like
+              </a>
+              <!--a class="tab-item" href="#">
+                <i class="icon ion-chatbox"></i>
+                Comment
+              </a>
+              <a class="tab-item" href="#">
+                <i class="icon ion-share"></i>
+                Share
+              </a-->
+          </div>          
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-infinite-scroll
+      icon="ion-loading-c"
+      on-infinite="loadMore()"
+      distance="1%">
+    </ion-infinite-scroll>    
+  </ion-content>
+</ion-view>

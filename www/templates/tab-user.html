@@ -1,0 +1,28 @@
+<ion-view view-title="User">
+  <ion-content style="background: #e8ebf1;" class="padding">
+    <div class="list card">
+      <div class="item item-avatar">
+        <img src="img/users-header.png">
+        <h2>{{user.nick}}</h2>
+        <p>
+          {{user.email}}
+        </p>
+      </div>
+      <div class="item item-body">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Your Nick</span>
+            <input type="text" placeholder="Your Nick" ng-model="user.nick">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="Email" ng-model="user.email">
+          </label>
+        </div>
+        <button class="button button-block button-dark" ng-click="identifyUser()">
+          Save
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
