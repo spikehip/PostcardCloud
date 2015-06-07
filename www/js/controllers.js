@@ -1,8 +1,17 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicUser) {
+.controller('HomeCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicUser, $ionicModal) {
   // Nothing to see here.
   //console.debug($ionicUser);
+  $scope.searchDialog = null;
+  $ionicModal.fromTemplateUrl('search.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    alert('in position');    
+    $scope.searchDialog = modal;
+    console.debug($scope.searchDialog);
+  }); 
   
   var myFirebaseRef = new Firebase("https://postcardcloud.firebaseio.com/");
   $scope.items = [];
@@ -94,7 +103,9 @@ angular.module('starter.controllers', [])
       }
     });
   };
-  
+  $scope.search = function() { 
+    $scope.searchDialog.show();
+  };
 })
 
 .controller('UserCtrl', function($scope, $rootScope, $ionicUser) {
