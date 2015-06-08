@@ -1,8 +1,39 @@
 <ion-modal-view>
-    <ion-header-bar>
-      <h1 class="title">My Modal title</h1>
-    </ion-header-bar>
-    <ion-content>
-      Hello!
-    </ion-content>
+  <ion-header-bar>
+    <h1 class="title">Filtering options</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="item item-divider">Date</div>
+    <ion-toggle ng-model="filter.isFilterDate" toggle-class="toggle-calm">Filter on date</ion-toggle>
+    <label class="item item-input">
+      <input type="text" placeholder="yyyy-mm-dd" ng-model="filter.date">
+    </label>
+    
+    <div class="item item-divider">Place</div>
+    <ion-toggle ng-model="filter.isFilterPlace" toggle-class="toggle-calm" ng-disabled="true">Filter on geographic location</ion-toggle>
+    <label class="item item-input">
+      <input type="text" placeholder="City" ng-model="filter.city">
+    </label>
+    <label class="item item-input">
+      <input type="text" placeholder="Radius in km" ng-model="filter.cityRadius">
+    </label>
+    <div class="item item-divider">User</div>
+    <ion-toggle ng-model="filter.isFilterUser" toggle-class="toggle-calm">Filter on nick</ion-toggle>
+    <label class="item item-input">
+      <input type="text" placeholder="Nick" ng-model="filter.user">
+    </label>
+    <div class="item item-divider"></div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-dark" ng-click="doCancel()">
+          Cancel
+        </button>    
+      </div>
+      <div class="col">
+        <button class="button button-block button-dark" ng-click="doFilter()">
+          Filter
+        </button>    
+      </div>
+    </div>
+  </ion-content>
 </ion-modal-view>

@@ -1,24 +1,36 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicUser, $ionicModal) {
+.controller('HomeCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicUser, $ionicModal, $ionicScrollDelegate, $location, $window ) {
   // Nothing to see here.
   //console.debug($ionicUser);
-  $scope.searchDialog = null;
-  $ionicModal.fromTemplateUrl('search.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    alert('in position');    
-    $scope.searchDialog = modal;
-    console.debug($scope.searchDialog);
-  }); 
-  
   var myFirebaseRef = new Firebase("https://postcardcloud.firebaseio.com/");
+  var searchObject = $location.search();
+  
   $scope.items = [];
   $scope.start = 0;
   $scope.limit = 5;
+  $scope.filterModal = null;
+  $scope.filter = {
+    isFilterDate: searchObject.date!=null?true:false,
+    isFilterPlace: false,
+    isFilterUser: searchObject.nick!=null?true:false,
+    date: searchObject.date,
+    user: searchObject.nick,
+    city: null,
+    cityRadius: null
+  }
   
   console.log("Identified user: ",$ionicUser.get());
+  console.log("Window", $window);
+  
+  $ionicModal.fromTemplateUrl('/templates/search.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.filterModal = modal;
+    console.log("Modal dialog /templates/search.html loaded.");
+  }); 
+  
   
   // Get the data on a post that has changed
   myFirebaseRef.child('cards').on("child_added", function(snapshot) {
@@ -38,11 +50,24 @@ angular.module('starter.controllers', [])
       });
     }
   });  
-  
+    
   $scope.loadMore = function() {
     console.log("loading json data");
-    $http.get($ApiEndpoint.url+'?start='+$scope.start+'&limit='+$scope.limit).then(function(resp) {
+    var filters = [];
+    var filterParameters = "";
+    if ( $scope.filter.isFilterDate && $scope.filter.date != null && $scope.filter.date.length > 0) { 
+      filters.push("date="+$scope.filter.date);  
+    }
+    if ( $scope.filter.isFilterUser && $scope.filter.user != null && $scope.filter.user.length > 0) { 
+      filters.push("nick="+$scope.filter.user);  
+    }
+    if (filters.length > 0) {
+      filterParameters = "&"+filters.join("&");
+      console.log("Filtering: ",filterParameters);
+    }
+    $http.get($ApiEndpoint.url+'?start='+$scope.start+'&limit='+$scope.limit+filterParameters).then(function(resp) {
         // For JSON responses, resp.data contains the result
+        console.log("Loaded "+resp.data.images.length+" records", resp.data);
         $scope.items = resp.data.images;
         $scope.limit += 5;
         $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -103,9 +128,44 @@ angular.module('starter.controllers', [])
       }
     });
   };
-  $scope.search = function() { 
-    $scope.searchDialog.show();
+  $scope.search = function() {
+    if ($scope.filterModal != null) {
+      $scope.filterModal.show();
+    }
+    else {
+      alert('Filter not available');
+    }
   };
+  
+  $scope.$on('modal.removed', function() {
+    alert('filter modal closed');
+  });
+  
+  $scope.doFilter = function() { 
+    console.log("Filter data received", $scope.filter);
+    var filters = [];
+    var filterParameters = "";
+    if ( $scope.filter.isFilterDate && $scope.filter.date != null && $scope.filter.date.length > 0) { 
+      filters.push("date="+$scope.filter.date);  
+    }
+    if ( $scope.filter.isFilterUser && $scope.filter.user != null && $scope.filter.user.length > 0) { 
+      filters.push("nick="+$scope.filter.user);  
+    }
+    if (filters.length > 0) {
+      filterParameters = filters.join("&");
+      console.log("Filtering: ",filterParameters);
+    }
+    
+    $scope.filterModal.hide();
+    $ionicScrollDelegate.scrollTop();
+    $location.search(filterParameters);    
+    console.log($location.absUrl());
+    $window.location.href=$location.absUrl();
+    $window.location.reload();
+  }
+  $scope.doCancel = function() {
+    $scope.filterModal.hide();
+  }
 })
 
 .controller('UserCtrl', function($scope, $rootScope, $ionicUser) {
