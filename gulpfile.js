@@ -57,7 +57,7 @@ var replaceFiles = ['./www/js/app.js'];
 gulp.task('add-proxy', function() {
   return replace({
     regex: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php",
-    replacement: "http://localhost:8100/json.php",
+    replacement: "http://lifeoftbc-135745.nitrousapp.com:8100/json.php",
     paths: replaceFiles,
     recursive: false,
     silent: false,
@@ -66,7 +66,7 @@ gulp.task('add-proxy', function() {
 
 gulp.task('remove-proxy', function() {
   return replace({
-    regex: "http://localhost:8100/json.php",
+    regex: "http://lifeoftbc-135745.nitrousapp.com:8100/json.php",
     replacement: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php",
     paths: replaceFiles,
     recursive: false,

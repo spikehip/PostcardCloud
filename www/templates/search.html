@@ -8,7 +8,11 @@
     <label class="item item-input">
       <input type="text" placeholder="yyyy-mm-dd" ng-model="filter.date">
     </label>
-    
+    <div class="item item-divider">User</div>
+    <ion-toggle ng-model="filter.isFilterUser" toggle-class="toggle-calm">Filter on nick</ion-toggle>
+    <label class="item item-input">
+      <input type="text" placeholder="Nick" ng-model="filter.user">
+    </label>
     <div class="item item-divider">Place</div>
     <ion-toggle ng-model="filter.isFilterPlace" toggle-class="toggle-calm" ng-disabled="true">Filter on geographic location</ion-toggle>
     <label class="item item-input">
@@ -16,11 +20,6 @@
     </label>
     <label class="item item-input">
       <input type="text" placeholder="Radius in km" ng-model="filter.cityRadius">
-    </label>
-    <div class="item item-divider">User</div>
-    <ion-toggle ng-model="filter.isFilterUser" toggle-class="toggle-calm">Filter on nick</ion-toggle>
-    <label class="item item-input">
-      <input type="text" placeholder="Nick" ng-model="filter.user">
     </label>
     <div class="item item-divider"></div>
     <div class="row">
