@@ -12,8 +12,11 @@
             <p>{{item.date}}</p>
             <p data-id="liked-by-{{item.id}}"></p>
           </div>
-          <div class="item item-image">
-            <img ng-src="http://meztelen.hu/uploads/assets/{{item.filename}}" alt="{{item.filename}}"/>
+          <div class="item item-image" ng-switch="settings.imageSize">
+            <img ng-switch-when="original" ng-src="http://meztelen.hu/uploads/assets/{{item.filename}}" alt="{{item.filename}}">
+            <img ng-switch-when="edge" ng-src="http://meztelen.hu/asset/medium?filename={{item.filename}}" alt="{{item.filename}}">
+            <img ng-switch-when="poor" ng-src="http://meztelen.hu/asset/thumbnail?filename={{item.filename}}" alt="{{item.filename}}">
+            <img ng-switch-default ng-src="http://meztelen.hu/asset/large?filename={{item.filename}}" alt="{{item.filename}}"/>
           </div>
           <div class="item tabs tabs-secondary tabs-icon-left">
               <a class="tab-item" data-id="{{item.id}}" href="#" ng-click="like({{item}})">

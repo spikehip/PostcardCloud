@@ -1,11 +1,13 @@
 angular.module('starter.controllers', [])
-
+.controller('TabsCtrl', function($http, $scope, $rootScope, $ionicUser){
+  $scope.hasProfile = $ionicUser.get().user_id != null ? true : false; 
+})
 .controller('HomeCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicUser, $ionicModal, $ionicScrollDelegate, $location, $window ) {
   // Nothing to see here.
   //console.debug($ionicUser);
   var myFirebaseRef = new Firebase("https://postcardcloud.firebaseio.com/");
   var searchObject = $location.search();
-  
+  $scope.settings = {imageSize: $ionicUser.get().imageSize || 'auto' };
   $scope.items = [];
   $scope.start = 0;
   $scope.limit = 5;
@@ -173,8 +175,6 @@ angular.module('starter.controllers', [])
    * Identifies a new user with the Ionic User service (read the docs at http://docs.ionic.io/identify/). This should be
    * called before any other registrations take place.
    **/
-  
-  
   $scope.user = {
     nick: $ionicUser.get().nick,
     email: $ionicUser.get().email
@@ -202,9 +202,15 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SettingsCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicApp) {
+.controller('SettingsCtrl', function($http, $scope, $rootScope, $ionicPush, $ionicApp, $ionicUser) {
   // Put your private API key here to be able to send push notifications from within the app.
   // TODO: Add your private API key here if you want to push from your device.
+  var user = $ionicUser.get();
+  console.debug(user);
+  $scope.settings = {
+    imageSize: user.imageSize,
+    enablePush: false
+  };
   $scope.privateKey = '';
 
   // Write your own code here to handle new device tokens from push notification registration as they come in.
@@ -275,4 +281,15 @@ angular.module('starter.controllers', [])
       alert('Uh-oh!  To use this function, add your Private API Key to line 36 of controllers.js');
     }
   };
+  $scope.saveSettings = function() {
+    $rootScope.settings = $scope.settings;
+    angular.extend(user, {
+      imageSize: $scope.settings.imageSize
+    });    
+    $ionicUser.identify(user).then(function(){
+      alert("Settings saved.");
+    });
+    
+  };
+  
 });

@@ -1,39 +1,42 @@
 <ion-view view-title="Settings">
   <ion-content style="background: #e8ebf1;" class="padding">
     <div class="item item-divider">Notifications</div>
-    <ion-toggle ng-model="enablePush" toggle-class="toggle-calm">Push Notifications</ion-toggle>
+    <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm" ng-disabled="true">Push Notifications</ion-toggle>
     <div class="item item-divider">Image size / Bandwidth usage</div>
     <div class="list">
 
   <label class="item item-radio">
-    <input type="radio" name="group" ng-model="imageSize">
+    <input type="radio" name="group" ng-model="settings.imageSize" value="auto">
     <div class="item-content">
       Automatic
     </div>
     <i class="radio-icon ion-android-star"></i>
   </label>
   <label class="item item-radio">
-    <input type="radio" name="group" ng-model="imageSize">
+    <input type="radio" name="group" ng-model="settings.imageSize" value="original">
     <div class="item-content">
       Original
     </div>
     <i class="radio-icon ion-android-star"></i>
   </label>
   <label class="item item-radio">
-    <input type="radio" name="group" ng-model="imageSize">
+    <input type="radio" name="group" ng-model="settings.imageSize" value="edge">
     <div class="item-content">
       EDGE ready
     </div>
     <i class="radio-icon ion-android-star-half"></i>
   </label>
   <label class="item item-radio">
-    <input type="radio" name="group" ng-model="imageSize">
+    <input type="radio" name="group" ng-model="settings.imageSize" value="poor">
     <div class="item-content">
       I am poor
     </div>
     <i class="radio-icon ion-android-star-outline"></i>
   </label>
-
+      
+  <button class="button button-block button-dark" ng-click="saveSettings()">
+    Save
+  </button>
 </div>
   </ion-content>  
 </ion-view>
