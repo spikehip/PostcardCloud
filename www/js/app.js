@@ -106,6 +106,14 @@ angular.module('starter', [
         controller: 'SettingsCtrl'
       }
     }
+  })
+  .state('tab.credits', {
+    url: '/credits',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/credits.html'
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback
