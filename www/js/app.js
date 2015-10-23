@@ -85,7 +85,24 @@ angular.module('starter', [
       }
     }
   })
-
+  .state('tab.info',{
+    url: '/info',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/info.html',
+        controller: 'InfoCtrl'
+      }
+    }
+  })
+  .state('tab.detail',{
+    url: '/detail',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/detail.html',
+        controller: 'InfoCtrl'
+      }
+    }
+  })
   // Ionic User tab
   .state('tab.user', {
     url: '/user',

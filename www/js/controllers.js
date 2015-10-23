@@ -98,7 +98,7 @@ angular.module('starter.controllers', [])
       alert("Please complete your profile!");
     }
   };
-  
+    
   $scope.fillLikeInfoOnCard = function( key ) { 
     var el=angular.element(document).find("a[data-id='"+key+"']");
     el.addClass("active");
@@ -287,9 +287,16 @@ angular.module('starter.controllers', [])
       imageSize: $scope.settings.imageSize
     });    
     $ionicUser.identify(user).then(function(){
-      alert("Settings saved.");
+      alert("Settings saved. Please reload the page!");
     });
     
   };
   
+})
+.controller('InfoCtrl', function($http, $scope, $rootScope, $ionicUser, $location){
+  var params = $location.search();
+  $scope.id = params.id;
+  $scope.filename = params.filename;
+  $scope.url = params.url;
+  $scope.settings = {imageSize: params.imageSize};
 });
