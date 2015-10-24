@@ -303,5 +303,13 @@ angular.module('starter.controllers', [])
   $scope.id = params.id;
   $scope.filename = params.filename;
   $scope.url = params.url;
+  $scope.exif = [];
   $scope.settings = {imageSize: params.imageSize};
+  $http.get($ApiEndpoint.assetServer+'?filename='+$scope.filename).then(function(resp) {
+        // For JSON responses, resp.data contains the result
+        console.log("Loaded exif info "+resp.data.length+" records", resp.data);
+        $scope.exif = resp.data;
+      }, function(err) {
+        console.error('ERR', err);        
+      });
 });

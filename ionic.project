@@ -5,6 +5,10 @@
     {
       "path": "/json.php",
       "proxyUrl": "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php"
+    },
+    {
+      "path": "/exif.php",
+      "proxyUrl": "http://meztelen.hu/asset/exifinfo"
     }
   ]
 }

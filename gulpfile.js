@@ -55,9 +55,16 @@ var replace = require('replace');
 var replaceFiles = ['./www/js/app.js'];
 
 gulp.task('add-proxy', function() {
-  return replace({
+  replace({
     regex: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php",
-    replacement: "http://lifeoftbc-135745.nitrousapp.com:8100/json.php",
+    replacement: "http://localhost:8100/json.php",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+  return replace({
+    regex: "http://meztelen.hu/asset/exifinfo",
+    replacement: "http://localhost:8100/exif.php",
     paths: replaceFiles,
     recursive: false,
     silent: false,
@@ -65,9 +72,16 @@ gulp.task('add-proxy', function() {
 });
 
 gulp.task('remove-proxy', function() {
-  return replace({
-    regex: "http://lifeoftbc-135745.nitrousapp.com:8100/json.php",
+  replace({
+    regex: "http://localhost:8100/json.php",
     replacement: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  }); 
+  return replace({
+    regex: "http://localhost:8100/exif.php",
+    replacement: "http://meztelen.hu/asset/exifinfo",
     paths: replaceFiles,
     recursive: false,
     silent: false,
