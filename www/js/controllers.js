@@ -21,23 +21,26 @@ angular.module('starter.controllers', [])
     city: null,
     cityRadius: null
   }
+  $scope.isFilterModalLoaded = false;
   
   console.log("Identified user: ",$ionicUser.get());
   console.log("Window", $window);
   
-  $ionicModal.fromTemplateUrl('/templates/search.html', {
+  $ionicModal.fromTemplateUrl('templates/search.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.filterModal = modal;
-    console.log("Modal dialog /templates/search.html loaded.");
+    $scope.isFilterModalLoaded = true;
+  }, function(modal){
+    console.log("Modal rejected");
+    console.debug(modal);
   }); 
-  
   
   // Get the data on a post that has changed
   myFirebaseRef.child('cards').on("child_added", function(snapshot) {
     var item = snapshot.val();
-    console.log("new like", item);
+    //console.log("new like", item);
     var el=angular.element(document).find("a[data-id='"+item.id+"']");
     el.addClass("active");
     //collect nicks who liked this card
@@ -105,23 +108,25 @@ angular.module('starter.controllers', [])
     //collect nicks who liked this card
     var card = new Firebase("https://postcardcloud.firebaseio.com/cards/"+key+"/likes");
     card.once("value",function(likes) { 
-      console.log("This many users liked "+key,likes.val());
+      //console.log("This many users liked "+key,likes.val());
       $scope.fillInUsersLikes(key, likes.val());
     });
   };
   
   $scope.fillInUsersLikes = function(key, users) { 
       var nicks = [];
-      $.each(users,function(v,k) {
-        nicks.push(k.nick);
-      });
-      console.log(nicks.join(","));
-      var likedby = angular.element(document).find("p[data-id='liked-by-"+key+"']");
-      likedby.html(nicks.join(",")+(nicks.length>1?" like":" likes")+" this.");
+      if (users != null) {
+        $.each(users,function(v,k) {
+          nicks.push(k.nick);
+        });
+        //console.log(nicks.join(","));
+        var likedby = angular.element(document).find("p[data-id='liked-by-"+key+"']");
+        likedby.html(nicks.join(",")+(nicks.length>1?" like":" likes")+" this.");
+      }
   };
   
   $scope.loadLikedCards = function() { 
-    console.log("collecting likes from firebase");
+    //console.log("collecting likes from firebase");
     myFirebaseRef.child('cards').once("value",function(data) {
       if (data.val() != null) { 
         for(key in data.val()) {

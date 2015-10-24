@@ -1,6 +1,6 @@
 // Ionic Starter App
 var $ApiEndpoint = {
-  url: 'http://lifeoftbc-135745.nitrousapp.com:8100/json.php'
+  url: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php'
 };
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
