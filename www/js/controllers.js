@@ -83,6 +83,12 @@ angular.module('starter.controllers', [])
         $scope.start=0;
       })
   };
+  $scope.doRefresh = function() {
+    $scope.items = [];
+    $scope.start = 0;
+    $scope.limit = 5;
+    $scope.loadMore();
+  };
   $scope.$on('$stateChangeSuccess', function() {
     $scope.loadMore();
   });

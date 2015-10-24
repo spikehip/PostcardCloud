@@ -3,6 +3,10 @@
    <button class="button icon ion-funnel" ng-click="search()" ng-show="isFilterModalLoaded"></button>
   </ion-nav-buttons> 
   <ion-content style="background: #e8ebf1;" class="padding">
+    <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
     <ion-list>
       <ion-item ng-repeat="item in items">
         <div class="card">
