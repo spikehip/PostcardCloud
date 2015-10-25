@@ -1,7 +1,7 @@
 // Ionic Starter App
 var $ApiEndpoint = {
-  url: 'http://localhost:8100/json.php',
-  assetServer: 'http://localhost:8100/exif.php'
+  url: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php',
+  assetServer: 'http://meztelen.hu/asset/exifinfo'
 };
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
