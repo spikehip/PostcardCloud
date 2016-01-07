@@ -1,7 +1,8 @@
 // Ionic Starter App
 var $ApiEndpoint = {
   url: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php',
-  assetServer: 'http://meztelen.hu/asset/exifinfo'
+  assetServer: 'http://meztelen.hu/asset/exifinfo',
+  pushRegistry: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php'
 };
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -10,11 +11,12 @@ var $ApiEndpoint = {
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', [
-  'ionic',
-  'ngCordova',
-  'ionic.service.core',
+  'ionic','ionic.service.core',
+  'ngCordova',  
+  'ngCordova.plugins',
+  // 'ngCordova.plugins.push',
   'ionic.service.push',
-  'ionic.service.deploy',
+//  'ionic.service.deploy',
   'starter.controllers'
 ])
 
@@ -30,7 +32,7 @@ angular.module('starter', [
   });
 }])
 
-.run(function($rootScope, $ionicDeploy, $ionicPlatform, $cordovaStatusbar) {
+.run(function($rootScope, $ionicPlatform, $cordovaStatusbar, $http, $ionicUser) {
 
   $ionicPlatform.ready(function() {
 
@@ -50,11 +52,38 @@ angular.module('starter', [
       interval: 2 * 60 * 1000
     };
 
-    // Watch Ionic Deploy service for new code
-    $ionicDeploy.watch($rootScope.updateOptions).then(function() {}, function() {}, function(hasUpdate) {
-      $rootScope.lastChecked = new Date();
-      console.log('WATCH RESULT', hasUpdate);
+    var pushOptions = {
+      allowAlert: false, 
+      allowBadge: false,
+      allowSound: true,
+      canRunActionsOnWake: true,
+      onNotification: function(data) {
+        console.log("Notification recevied", data);
+      }
+    };
+    var push = new Ionic.Push({
+      "debug": false
     });
+
+    if ($ionicUser.get().enablePush) {
+      console.log("Push Notification setting Enabled");
+      //$ionicPush.register(pushOptions, $ionicUser.get());
+      push.register(function(pushToken) {
+        console.log("Device token:",pushToken.token);
+        $http.get($ApiEndpoint.pushRegistry+'?action=register&deviceid='+pushToken.token+'&registrationid='+pushToken.token);
+      });      
+    }
+    else {
+      //$ionicPush.unregister(pushOptions);
+      push.unregister();
+      $http.get($ApiEndpoint.pushRegistry+'?action=unregister&deviceid='+pushToken.token);
+    }
+
+    // Watch Ionic Deploy service for new code
+    // $ionicDeploy.watch($rootScope.updateOptions).then(function() {}, function() {}, function(hasUpdate) {
+    //   $rootScope.lastChecked = new Date();
+    //   console.log('WATCH RESULT', hasUpdate);
+    // });
   });
 })
 
