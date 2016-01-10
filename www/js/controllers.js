@@ -219,41 +219,58 @@ angular.module('starter.controllers', [])
   var user = $ionicUser.get();
   //console.debug(user);
   $scope.settings = {
-    imageSize: user.imageSize,
+    imageSize: typeof user.imageSize == 'undefined'?false:(user.imageSize=='edge'),
     enablePush: user.enablePush
   };
   $scope.privateKey = '';
 
+  console.debug($scope.settings);
+
   $scope.saveSettings = function() {
     $rootScope.settings = $scope.settings;
     angular.extend(user, {
-      imageSize: $scope.settings.imageSize,
+      imageSize: $scope.settings.imageSize?'edge':'original',
       enablePush: $scope.settings.enablePush
     });    
     $ionicUser.identify(user).then(function(){
       var push = new Ionic.Push({
-        "debug": false
+        "debug": false,
+        "production": true
       });
       if (user.enablePush) {
         //register for push service
         push.register(function(pushToken) {
-          console.log("Device token:",pushToken.token);
-          $http.get($ApiEndpoint.pushRegistry+'?action=register&deviceid='+pushToken.token+'&registrationid='+pushToken.token)
+          console.log("Device token:",pushToken);
+          $http.get($ApiEndpoint.pushRegistry+'?action=register&deviceid='+user.user_id+'&registrationid='+pushToken.token)
           .then(function(resp){
             console.log("Device registered with sandbox");
+            angular.extend(user, {
+              imageSize: $scope.settings.imageSize?'edge':'original',
+              enablePush: $scope.settings.enablePush,
+              pushToken: pushToken.token
+            });    
+            $ionicUser.identify(user);
           }, function(err){
             console.log("Device registration with sandbox failed");
           });
         });      
       }
       else {
-        push.unregister();
-        $http.get($ApiEndpoint.pushRegistry+'?action=unregister&deviceid='+pushToken.token)
-        .then(function(resp){
-            console.log("Device unregistered with sandbox");
-          }, function(err){
-            console.log("Device unregistration with sandbox failed");
-          });
+        if (user.pushToken && user.pushToken.length > 0) {
+          push.unregister();
+          $http.get($ApiEndpoint.pushRegistry+'?action=unregister&deviceid='+user.user_id)
+          .then(function(resp){
+              console.log("Device unregistered with sandbox");
+              angular.extend(user, {
+                imageSize: $scope.settings.imageSize?'edge':'original',
+                enablePush: $scope.settings.enablePush,
+                pushToken: ''
+              });            
+              $ionicUser.identify(user);                
+            }, function(err){
+              console.log("Device unregistration with sandbox failed");
+            });          
+        }
       }
       alert("Settings saved. Please reload the page!");
     });

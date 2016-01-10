@@ -62,21 +62,39 @@ angular.module('starter', [
       }
     };
     var push = new Ionic.Push({
-      "debug": false
+      "debug": true,
+      "production": true,
+      "onNotification": function(notification) {
+        var payload = notification.payload;
+        console.log("Push Notification recevied");
+        console.log(notification, payload);
+      }      
     });
 
     if ($ionicUser.get().enablePush) {
       console.log("Push Notification setting Enabled");
       //$ionicPush.register(pushOptions, $ionicUser.get());
       push.register(function(pushToken) {
-        console.log("Device token:",pushToken.token);
-        $http.get($ApiEndpoint.pushRegistry+'?action=register&deviceid='+pushToken.token+'&registrationid='+pushToken.token);
+        console.debug("Device token:",pushToken);
+        $http.get($ApiEndpoint.pushRegistry+'?action=register&deviceid='+$ionicUser.get().user_id+'&registrationid='+pushToken.token)
+        .then(function(resp){
+            console.log("Device registered with sandbox");
+          }, function(err){
+            console.log("Device registration with sandbox failed");
+          });
       });      
     }
     else {
       //$ionicPush.unregister(pushOptions);
-      push.unregister();
-      $http.get($ApiEndpoint.pushRegistry+'?action=unregister&deviceid='+pushToken.token);
+      if (typeof $ionicUser.get().pushToken != 'undefined' && $ionicUser.get().pushToken.length > 0) {
+        push.unregister();
+        $http.get($ApiEndpoint.pushRegistry+'?action=unregister&deviceid='+$ionicUser.get().user_id)
+        .then(function(resp){
+              console.log("Device unregistered with sandbox");
+            }, function(err){
+              console.log("Device unregistration with sandbox failed");
+            });           
+      }
     }
 
     // Watch Ionic Deploy service for new code

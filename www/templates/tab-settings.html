@@ -1,43 +1,23 @@
 <ion-view view-title="Settings">
   <ion-content style="background: #e8ebf1;" class="padding">
     <div class="item item-divider">Notifications</div>
-    <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm" ng-disabled="false">Push Notifications</ion-toggle>
+    <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm">Push Notifications</ion-toggle>
     <div class="item item-divider">Image size / Bandwidth usage</div>
+    <ion-toggle ng-model="settings.imageSize" toggle-class="toggle-calm">EDGE ready</ion-toggle>    
+    <!--ion-list>
+      <ion-radio ng-model="settings.imageSize" ng-value="auto">Automatic</ion-radio>
+      <ion-radio ng-model="settings.imageSize" ng-value="original">Original</ion-radio>
+      <ion-radio ng-model="settings.imageSize" ng-value="edge">EDGE ready</ion-radio>
+      <ion-radio ng-model="settings.imageSize" ng-value="poor">I am poor</ion-radio>
+    </ion-list-->
     <div class="list">
 
-  <label class="item item-radio">
-    <input type="radio" name="group" ng-model="settings.imageSize" value="auto">
-    <div class="item-content">
-      Automatic
-    </div>
-    <i class="radio-icon ion-android-star"></i>
-  </label>
-  <label class="item item-radio">
-    <input type="radio" name="group" ng-model="settings.imageSize" value="original">
-    <div class="item-content">
-      Original
-    </div>
-    <i class="radio-icon ion-android-star"></i>
-  </label>
-  <label class="item item-radio">
-    <input type="radio" name="group" ng-model="settings.imageSize" value="edge">
-    <div class="item-content">
-      EDGE ready
-    </div>
-    <i class="radio-icon ion-android-star-half"></i>
-  </label>
-  <label class="item item-radio">
-    <input type="radio" name="group" ng-model="settings.imageSize" value="poor">
-    <div class="item-content">
-      I am poor
-    </div>
-    <i class="radio-icon ion-android-star-outline"></i>
-  </label>
-      
-  <button class="button button-block button-dark" ng-click="saveSettings()">
-    Save
-  </button>
+      <button class="button button-block button-dark" ng-click="saveSettings()">
+        Save
+      </button>
+
       <a class="button" href="#/tab/credits">Credits</a>
-</div>
+
+    </div>
   </ion-content>  
 </ion-view>

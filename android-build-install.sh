@@ -1,4 +1,6 @@
 #!/bin/bash
+export ANDROID_HOME=~/Library/Android/sdk
+export JAVA_HOME=$(/usr/libexec/java_home)
 gulp remove-proxy
 ionic build android
 cp platforms/android/build/outputs/apk/android-debug.apk www/
