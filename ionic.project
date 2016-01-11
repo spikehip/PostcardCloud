@@ -12,7 +12,7 @@
     },
     {
       "path": "/server.php",
-      "proxyUrl": "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php"    
+      "proxyUrl": "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php"
     }
   ]
 }
