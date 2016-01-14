@@ -101,3 +101,8 @@ gulp.task('remove-proxy', function() {
     silent: false,
   });
 });
+
+gulp.task('ioswidget', function() {
+    gulp.src('./LifeOfTbc2Widget/**/*')
+    .pipe(gulp.dest('./platforms/ios'));
+});
