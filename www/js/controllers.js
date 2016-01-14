@@ -285,10 +285,21 @@ angular.module('starter.controllers', [])
   $scope.url = params.url;
   $scope.exif = [];
   $scope.settings = {imageSize: params.imageSize};
+  $scope.zoomHeight = $(window).height()-200;
+
   $http.get($ApiEndpoint.assetServer+'?filename='+$scope.filename).then(function(resp) {
         // For JSON responses, resp.data contains the result
         console.log("Loaded exif info "+resp.data.length+" records", resp.data);
         $scope.exif = resp.data;
+        //get real image size from exif data 
+        for(var i=0; i<resp.data.length; i++) {
+          if (resp.data[i] && resp.data[i].indexOf("Image size") == 0) {
+            var size = resp.data[i].substring(18).split(" x ");
+            console.debug(size);
+            $scope.imageWidth = size[0];
+            $scope.imageHeight = size[1];            
+          }
+        }
       }, function(err) {
         console.error('ERR', err);        
       });

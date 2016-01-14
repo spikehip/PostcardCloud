@@ -1,11 +1,13 @@
 <ion-view view-title="Detail {{settings.imageSize}}">
         <ion-content class="padding">
-          <div class="item item-image" ng-switch="settings.imageSize">
-            <img ng-switch-when="original" ng-src="http://meztelen.hu/uploads/assets/{{filename}}" alt="{{filename}}">
-            <img ng-switch-when="edge" ng-src="http://meztelen.hu/asset/medium?filename={{filename}}" alt="{{filename}}">
-            <img ng-switch-when="poor" ng-src="http://meztelen.hu/asset/thumbnail?filename={{filename}}" alt="{{filename}}">
+          <ion-scroll zooming="true" direction="xy" style="width: 100%; height: {{zoomHeight}}px;">
+          <div class="item item-image" ng-switch="settings.imageSize" style="width: {{imageWidth}}px; height: {{imageHeight}}px;">
+            <img ng-switch-when="original" ng-src="http://meztelen.hu/uploads/assets/{{filename}}" alt="{{filename}}" />
+            <img ng-switch-when="edge" ng-src="http://meztelen.hu/asset/medium?filename={{filename}}" alt="{{filename}}" />
+            <img ng-switch-when="poor" ng-src="http://meztelen.hu/asset/thumbnail?filename={{filename}}" alt="{{filename}}" />
             <img ng-switch-default ng-src="http://meztelen.hu/asset/large?filename={{filename}}" alt="{{filename}}"/>
           </div>
+          </ion-scroll>
           <br/>
           <p><a class="button icon ion-home" href="#/tab/home"> Home</a></p>
   </ion-content>
