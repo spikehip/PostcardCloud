@@ -70,7 +70,7 @@ angular.module('starter.controllers', [])
       filterParameters = "&"+filters.join("&");
       console.log("Filtering: ",filterParameters);
     }
-    $http.get($ApiEndpoint.url+'?start='+$scope.start+'&limit='+$scope.limit+filterParameters).then(function(resp) {
+    $http.get($ApiEndpoint.url($ionicUser.get())+'?start='+$scope.start+'&limit='+$scope.limit+filterParameters).then(function(resp) {
         // For JSON responses, resp.data contains the result
         console.log("Loaded "+resp.data.images.length+" records", resp.data);
         $scope.items = resp.data.images;

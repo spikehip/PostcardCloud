@@ -1,8 +1,22 @@
 // Ionic Starter App
 var $ApiEndpoint = {
-  url: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php',
-  assetServer: 'http://meztelen.hu/asset/exifinfo',
-  pushRegistry: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php'
+  url: function(user) {
+    if ( typeof user != 'undefined' ) {
+      if ( user.email == 'sp6s@web2b.hu' || 
+           user.email == 'sp-nexus5x@web2b.hu' ||
+           user.email == 'vukci@d23.hu' || 
+           user.email == 'reby@web2b.hu' ||
+           user.email == 'nrgjoc@gmail.com' 
+        ) {
+        return $ApiEndpoint.privateUrl;
+      }
+    }
+    return $ApiEndpoint.publicUrl;
+  },
+  privateUrl: 'http://localhost:8100/json.php',
+  publicUrl: 'http://localhost:8100/public.php',
+  assetServer: 'http://localhost:8100/exif.php',
+  pushRegistry: 'http://localhost:8100/server.php'
 };
 
 // angular.module is a global place for creating, registering and retrieving Angular modules

@@ -63,6 +63,13 @@ gulp.task('add-proxy', function() {
     silent: false,
   });
   replace({
+    regex: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/public.php",
+    replacement: "http://localhost:8100/public.php",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+  replace({
     regex: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php",
     replacement: "http://localhost:8100/server.php",
     paths: replaceFiles,
@@ -82,6 +89,13 @@ gulp.task('remove-proxy', function() {
   replace({
     regex: "http://localhost:8100/json.php",
     replacement: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  }); 
+  replace({
+    regex: "http://localhost:8100/public.php",
+    replacement: "http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/public.php",
     paths: replaceFiles,
     recursive: false,
     silent: false,
