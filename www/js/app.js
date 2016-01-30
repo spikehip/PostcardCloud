@@ -1,6 +1,6 @@
 // Ionic Starter App
 var $ApiEndpoint = {
-  url: function(user) {
+  isAuthorized: function(user) {
     if ( typeof user != 'undefined' ) {
       if ( user.email == 'sp6s@web2b.hu' || 
            user.email == 'sp-nexus5x@web2b.hu' ||
@@ -8,8 +8,14 @@ var $ApiEndpoint = {
            user.email == 'reby@web2b.hu' ||
            user.email == 'nrgjoc@gmail.com' 
         ) {
-        return $ApiEndpoint.privateUrl;
+        return true;
       }
+    }
+    return false;
+  },
+  url: function(user) {
+    if ( $ApiEndpoint.isAuthorized(user) ) {
+        return $ApiEndpoint.privateUrl;
     }
     return $ApiEndpoint.publicUrl;
   },

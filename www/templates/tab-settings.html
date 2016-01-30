@@ -1,7 +1,7 @@
 <ion-view view-title="Settings">
   <ion-content style="background: #e8ebf1;" class="padding">
-    <div class="item item-divider">Notifications</div>
-    <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm">Push Notifications</ion-toggle>
+    <div class="item item-divider" ng-if="settings.isAuthorized">Notifications</div>
+    <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm" ng-if="settings.isAuthorized">Push Notifications</ion-toggle>
     <div class="item item-divider">Image size / Bandwidth usage</div>
     <ion-toggle ng-model="settings.imageSize" toggle-class="toggle-calm">EDGE ready</ion-toggle>    
     <!--ion-list>

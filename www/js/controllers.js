@@ -220,7 +220,8 @@ angular.module('starter.controllers', [])
   //console.debug(user);
   $scope.settings = {
     imageSize: typeof user.imageSize == 'undefined'?false:(user.imageSize=='edge'),
-    enablePush: user.enablePush
+    enablePush: user.enablePush,
+    isAuthorized: $ApiEndpoint.isAuthorized(user)
   };
   $scope.privateKey = '';
 
