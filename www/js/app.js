@@ -6,7 +6,7 @@ var $ApiEndpoint = {
            user.email == 'sp-nexus5x@web2b.hu' ||
            user.email == 'vukci@d23.hu' || 
            user.email == 'reby@web2b.hu' ||
-           user.email == 'nrgjoc@gmail.com' 
+           user.email == 'nrgjoc@gmail.com'
         ) {
         return true;
       }
