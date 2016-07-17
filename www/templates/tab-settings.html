@@ -4,6 +4,8 @@
     <ion-toggle ng-model="settings.enablePush" toggle-class="toggle-calm" ng-if="settings.isAuthorized">Push Notifications</ion-toggle>
     <div class="item item-divider">Image size / Bandwidth usage</div>
     <ion-toggle ng-model="settings.imageSize" toggle-class="toggle-calm">EDGE ready</ion-toggle>    
+    <div class="item item-divider">Content Filter</div>
+    <ion-toggle ng-model="settings.curated" toggle-class="toggle-calm">Show me curated content only</ion-toggle>    
     <!--ion-list>
       <ion-radio ng-model="settings.imageSize" ng-value="auto">Automatic</ion-radio>
       <ion-radio ng-model="settings.imageSize" ng-value="original">Original</ion-radio>

@@ -18,10 +18,45 @@
             <span class="input-label">Email</span>
             <input type="text" placeholder="Email" ng-model="user.email">
           </label>
+
+          <label class="item item-input item-floating-label">
+            <ion-toggle ng-model="user.eula" toggle-class="toggle-calm">I accept the EULA</ion-toggle>    
+          </label>
+
         </div>
-        <button class="button button-block button-dark" ng-click="identifyUser()">
+        <button class="button button-block button-dark" ng-click="identifyUser()" ng-if="user.eula">
           Save
         </button>
+        <div ng-if="!user.eula">
+          <p>You must accept the End User Licence Agreement</p>
+          <ul>
+            <li>There is no tolarence for objectionable content.</li>            
+            <li>Such submitted content must in no circumstances picture<br/>
+              <ul>
+                <li>Cartoon or Fantasy Violence</li>
+                <li>Realistic Violence</li>
+                <li>Prolonged Graphic or Sadistic Realistic Violence</li>
+                <li>Horror/Fear Themes</li>
+                <li>Medical/Treatment Information</li>
+                <li>Simulated Gambling</li>
+                <li>Graphic Sexual Content and Nudity</li>                
+              </ul>
+              and will be removed by staff within 24 hours.
+            </li>
+            <li>However, upon viewing not by staff curated content you may experience<br/>
+              <ul>
+                <li>Frequent/Intense use of Alcohol, Tobacco, or Drug Use or References</li>
+                <li>Infrequent/Mild use of Profanity or Crude Humor</li>
+                <li>Infrequent/Mild use of Mature/Suggestive Themes</li>
+                <li>Infrequent/Mild use of Sexual Content or Nudity</li>
+              </ul>
+            <li>Any objectionable content submitted will be removed by staff</li>
+            <li>Abusive users will be blocked by staff</li>
+            <li>You can report objectionable content by using the "Report to staff" button on the detail page of card</li>
+            <li>You can always come to IRC to express your feedback</li>
+            <li>Only Staff approved content is displayed until you opt for more in the settings.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </ion-content>

@@ -19,10 +19,10 @@ var $ApiEndpoint = {
     }
     return $ApiEndpoint.publicUrl;
   },
-  privateUrl: 'http://localhost:8100/json.php',
-  publicUrl: 'http://localhost:8100/public.php',
-  assetServer: 'http://localhost:8100/exif.php',
-  pushRegistry: 'http://localhost:8100/server.php'
+  privateUrl: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/json.php',
+  publicUrl: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/public.php',
+  assetServer: 'http://meztelen.hu/asset/exifinfo',
+  pushRegistry: 'http://sandbox.sun.bikeonet.hu/~spike/lifeoftbc/server.php'
 };
 
 // angular.module is a global place for creating, registering and retrieving Angular modules

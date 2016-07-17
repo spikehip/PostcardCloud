@@ -70,7 +70,9 @@ angular.module('starter.controllers', [])
       filterParameters = "&"+filters.join("&");
       console.log("Filtering: ",filterParameters);
     }
-    $http.get($ApiEndpoint.url($ionicUser.get())+'?start='+$scope.start+'&limit='+$scope.limit+filterParameters).then(function(resp) {
+    var curated = (typeof $ionicUser.get().curated == 'undefined') ? true : $ionicUser.get().curated;
+    
+    $http.get($ApiEndpoint.url($ionicUser.get())+'?curated='+curated+'&start='+$scope.start+'&limit='+$scope.limit+filterParameters).then(function(resp) {
         // For JSON responses, resp.data contains the result
         console.log("Loaded "+resp.data.images.length+" records", resp.data);
         $scope.items = resp.data.images;
@@ -221,7 +223,8 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     imageSize: typeof user.imageSize == 'undefined'?false:(user.imageSize=='edge'),
     enablePush: user.enablePush,
-    isAuthorized: $ApiEndpoint.isAuthorized(user)
+    isAuthorized: $ApiEndpoint.isAuthorized(user),
+    curated: typeof user.curated == 'undefined'?true:user.curated
   };
   $scope.privateKey = '';
 
@@ -231,7 +234,8 @@ angular.module('starter.controllers', [])
     $rootScope.settings = $scope.settings;
     angular.extend(user, {
       imageSize: $scope.settings.imageSize?'edge':'original',
-      enablePush: $scope.settings.enablePush
+      enablePush: $scope.settings.enablePush,
+      curated: $scope.settings.curated
     });    
     $ionicUser.identify(user).then(function(){
       var push = new Ionic.Push({
@@ -279,7 +283,7 @@ angular.module('starter.controllers', [])
   };
   
 })
-.controller('InfoCtrl', function($http, $scope, $rootScope, $ionicUser, $location){
+.controller('InfoCtrl', function($http, $scope, $rootScope, $ionicUser, $location) {
   var params = $location.search();
   $scope.id = params.id;
   $scope.filename = params.filename;
@@ -304,4 +308,14 @@ angular.module('starter.controllers', [])
       }, function(err) {
         console.error('ERR', err);        
       });
+  $scope.report = function() {
+    $http.get($ApiEndpoint.url($ionicUser.get())+'?report='+$scope.filename).then(function(resp) {        
+        console.debug(resp);
+        alert('Thank you - your concern will be supervised.');
+      }, function(err) {
+        console.error('ERR', err);
+        // err.status will contain the status code
+        alert('Please try reporting later.');
+      });      
+  };
 });
